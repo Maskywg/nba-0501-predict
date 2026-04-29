@@ -1,0 +1,21 @@
+name: Update NBA Results
+
+on:
+  schedule:
+    # 台灣 5/1 比賽時段：07:00-12:00 (UTC 23:00-04:00)
+    - cron: '*/15 23 * * *'   # UTC 23:xx = 台灣 07:xx
+    - cron: '*/15 0-3 * * *'  # UTC 00-03 = 台灣 08-11
+    # 非比賽時段每 2 小時
+    - cron: '0 4-22/2 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests
+      - run: python scripts/update_results.py
