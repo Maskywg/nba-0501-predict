@@ -98,7 +98,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,9vw,76px);line-heigh
 .final-score .dash{font-size:14px;color:var(--muted)}
 .final-score .fin-lbl{font-size:8px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase}
 
-.vote-row{border-top:1px solid var(--border);padding-top:16px}
+.vote-row{border-top:1px solid var(--border);padding-top:16px;position:relative}
 .vote-lbl{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
 .btns{display:flex;gap:8px}
 .vbtn{flex:1;padding:13px 8px;border-radius:11px;border:1.5px solid var(--border);background:rgba(29,66,138,.05);color:var(--text);font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:1px;cursor:pointer;transition:all .18s}
@@ -121,7 +121,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,9vw,76px);line-heigh
 .margin-tag.m-wrong{background:rgba(220,38,38,.06);color:#dc2626;border-color:rgba(220,38,38,.2);text-decoration:line-through;opacity:.7}
 .margin-badge{font-size:10px;font-weight:900;padding:2px 8px;border-radius:100px;background:rgba(29,66,138,.1);color:#1D428A;border:1px solid rgba(29,66,138,.25);margin-left:5px;vertical-align:middle}
 
-.lock-overlay{position:absolute;inset:0;background:rgba(220,230,255,.8);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#1D428A;letter-spacing:2px;backdrop-filter:blur(3px);z-index:5}
+.lock-overlay{position:absolute;inset:0;background:rgba(220,230,255,.85);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#1D428A;letter-spacing:2px;backdrop-filter:blur(3px);z-index:5}
 
 .submit-wrap{margin-top:36px;text-align:center;animation:slideUp .5s ease .7s both}
 .submit-hint{font-size:13px;color:var(--muted);margin-bottom:12px;letter-spacing:.5px}
@@ -487,9 +487,9 @@ function lockAll(){
   document.getElementById('modify-btn').style.display = 'none';
   document.querySelectorAll('.vbtn').forEach(b => b.disabled = true);
   document.querySelectorAll('.mbtn').forEach(b => b.disabled = true);
-  document.querySelectorAll('.card').forEach(c => {
+  document.querySelectorAll('.vote-row').forEach(v => {
     const o = document.createElement('div');
-    o.className = 'lock-overlay'; o.textContent = '🔒 已截止'; c.appendChild(o);
+    o.className = 'lock-overlay'; o.textContent = '🔒 已截止'; v.appendChild(o);
   });
 }
 
