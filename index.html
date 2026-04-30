@@ -657,23 +657,31 @@ function generateComment(votes, margins) {
   const v = votes || [];
   const m = margins || [];
   const hot = v.filter((t, i) => t === FAVORITES[i]).length;
-  const coldTeams = v.map((t, i) => (t && t !== FAVORITES[i]) ? t : null).filter(Boolean);
-  const tightAll = m.length > 0 && m.every(x => x === 0);
-  const bigAll   = m.length > 0 && m.every(x => x === 2);
+  const coldPicks = v.map((t, i) => (t && t !== FAVORITES[i]) ? t : null).filter(Boolean);
+  const tightAll  = m.length > 0 && m.every(x => x === 0);
+  const bigAny    = m.some(x => x === 2);
 
-  if (hot === MATCH_NAMES.length) {
-    if (tightAll) return '三場全押領先隊差距還押小分，穩健到讓人心疼——這樣是拿不了冠軍的';
-    if (bigAll)   return '三押熱門還押大比分，不是超級自信就是——反正比別人多一種輸法';
-    return '三場全押領先隊，風險最低的一個——但最安全的預測從來拿不了冠軍';
+  const coldQuips = {
+    '老鷹': 'Brunson 再猛你都押老鷹客場翻盤——今日最強冷門狙擊手',
+    '76人': 'Embiid 術後復出你就敢押——費城欠你一個奇蹟',
+    '金塊': 'Edwards 缺陣還押金塊——Jokic 大三元夠嗎？今晚答案揭曉',
+  };
+
+  if (hot === 3) {
+    if (tightAll) return '三場跟 ESPN 走，差距還全押小分——穩，但季後賽最怕的就是太穩';
+    if (bigAny)   return '全押領先隊還有場押大比分，自信滿滿——出來混，遲早要還的';
+    return '三場全押領先隊，最安全的選擇——但冠軍不住在安全地帶';
   }
   if (hot === 0) {
-    return '三場全押落後隊，不是瘋子就是先知——今晚見真章';
+    const q = coldPicks.map(t => coldQuips[t] || t).join('；');
+    return `三場全押落後隊——${q}——不是先知就是今晚最貴的教訓`;
   }
-  if (hot === MATCH_NAMES.length - 1) {
-    const ct = coldTeams[0] || '冷門隊';
-    return `兩穩一賭，單押 ${ct} 這手最致命——若爆冷，今日 MVP 就是你`;
+  if (coldPicks.length === 1) {
+    const ct = coldPicks[0];
+    return coldQuips[ct] || `兩穩一賭押 ${ct}——若爆冷今日 MVP 就是你`;
   }
-  return '膽大！兩場押落後隊，今天賭桌上你才是最大的主角';
+  const q = coldPicks.map(t => coldQuips[t] || t).join('＋');
+  return `兩場押冷門 ${q}，今天賭桌上你才是主角`;
 }
 
 // 手寫金句（優先顯示，未填則自動產生）
