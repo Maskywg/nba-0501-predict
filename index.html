@@ -161,6 +161,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,9vw,76px);line-heigh
 .me-tag{font-size:10px;color:#C8102E;margin-left:6px}
 .prev-champ{font-size:10px;font-weight:900;background:linear-gradient(135deg,#FFD700,#FFA500);color:#3a2000;padding:2px 8px;border-radius:100px;margin-left:5px;white-space:nowrap}
 .prev-runner{font-size:10px;font-weight:900;background:rgba(192,192,192,.25);color:#666;border:1px solid #ccc;padding:2px 8px;border-radius:100px;margin-left:5px;white-space:nowrap}
+.prev-bronze{font-size:10px;font-weight:900;background:rgba(180,100,30,.12);color:#a05010;border:1px solid rgba(180,100,30,.3);padding:2px 8px;border-radius:100px;margin-left:5px;white-space:nowrap}
 .lb-pick{font-size:11px;color:var(--muted)}
 .lb-pick.on{color:var(--text);font-weight:700}
 .lb-pick.correct{color:#16a34a;font-weight:900;background:rgba(22,163,74,.1);border-radius:6px;padding:1px 4px}
@@ -643,7 +644,8 @@ window.deleteMe = async function(){
 const SYM=['🥇','🥈','🥉'],CLS=['g','s','b'];
 const MATCH_NAMES=['尼克/老鷹','塞爾提克/76人','金塊/灰狼'];
 const PREV_CHAMPS  = ['徐世志']; // 4/30 冠軍：3/3全中＋差距2題對
-const PREV_RUNNERS = ['騎士不可能輸','歐宏麟','Jim','Mn','土豆仁','附中彭于晏','Hua','Harlem']; // 4/30 亞軍起
+const PREV_RUNNERS = ['騎士不可能輸']; // 4/30 亞軍：3/3全中＋差距1題對
+const PREV_BRONZE  = ['歐宏麟','Jim','Mn','土豆仁','附中彭于晏','Hua','Harlem']; // 4/30 銅牌：2/3正確
 
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
@@ -712,7 +714,7 @@ function renderLB(){
       <div class="lb-row ${isMe?'me':''}" ${rowStyle}>
         <div class="lb-rank ${allCorrect?'g':CLS[i]||''}">${allCorrect?'👑':SYM[i]||(i+1)}</div>
         <div class="lb-name">
-          <div class="crown-row">${esc(e.name)}${isMe?'<span class="me-tag">← 你</span>':''}${PREV_CHAMPS.some(n=>n.toLowerCase()===e.name.toLowerCase())?'<span class="prev-champ">👑 昨日冠軍</span>':PREV_RUNNERS.some(n=>n.toLowerCase()===e.name.toLowerCase())?'<span class="prev-runner">🥈 昨日亞軍</span>':''}${crownHtml}${scoreBadge}${mBadge}</div>
+          <div class="crown-row">${esc(e.name)}${isMe?'<span class="me-tag">← 你</span>':''}${PREV_CHAMPS.some(n=>n.toLowerCase()===e.name.toLowerCase())?'<span class="prev-champ">👑 昨日冠軍</span>':PREV_RUNNERS.some(n=>n.toLowerCase()===e.name.toLowerCase())?'<span class="prev-runner">🥈 昨日亞軍</span>':PREV_BRONZE.some(n=>n.toLowerCase()===e.name.toLowerCase())?'<span class="prev-bronze">🥉 昨日銅牌</span>':''}${crownHtml}${scoreBadge}${mBadge}</div>
           <div class="lb-sub">${sub}</div>
         </div>
         ${cells}${delBtn}
