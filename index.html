@@ -202,6 +202,13 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,9vw,76px);line-heigh
 .intro-quote{font-size:17px;font-weight:900;color:#1a2a3a;line-height:1.6;margin-bottom:12px;font-style:italic}
 .intro-sour{font-size:13px;color:#5577aa;line-height:1.8;border-top:1px dashed rgba(29,66,138,.2);padding-top:10px}
 .intro-sour strong{color:#1D428A}
+.next-day-link{display:flex;align-items:center;gap:16px;background:linear-gradient(135deg,#1D428A,#2a5fc4);border-radius:18px;padding:20px 24px;margin-top:32px;text-decoration:none;color:#fff;transition:all .25s;box-shadow:0 8px 28px rgba(29,66,138,.35)}
+.next-day-link:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(29,66,138,.45)}
+.next-day-left{flex:1}
+.next-day-kicker{font-size:10px;font-weight:900;letter-spacing:2px;opacity:.75;text-transform:uppercase;margin-bottom:6px}
+.next-day-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1.5px;margin-bottom:6px}
+.next-day-note{font-size:12px;opacity:.85;line-height:1.5;background:rgba(255,255,255,.12);border-radius:8px;padding:6px 10px;display:inline-block;margin-top:2px}
+.next-day-arrow{font-size:28px;opacity:.8;flex-shrink:0}
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--gold);color:#fff;font-weight:700;padding:13px 26px;border-radius:100px;font-size:14px;transition:transform .4s cubic-bezier(.34,1.56,.64,1);z-index:100;white-space:nowrap;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0)}
 </style>
@@ -346,6 +353,15 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,9vw,76px);line-heigh
     <div id="lb-body"><div class="lb-empty">🏀 連線中...</div></div>
   </div>
 </div>
+
+<a class="next-day-link" href="https://maskywg.github.io/nba-0502-predict/" target="_blank">
+  <div class="next-day-left">
+    <div class="next-day-kicker">📅 明日預測 5/2</div>
+    <div class="next-day-title">活塞 G6 · 騎士 G6 · 湖人 G6</div>
+    <div class="next-day-note">🎁 完成 5/2 預測後，即可領取 5/1 賽程精華照片</div>
+  </div>
+  <div class="next-day-arrow">→</div>
+</a>
 
 </div>
 <div class="toast" id="toast"></div>
