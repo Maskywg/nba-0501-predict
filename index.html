@@ -649,7 +649,34 @@ const PREV_CHAMPS  = ['徐世志'];
 const PREV_RUNNERS = ['騎士不可能輸'];
 const PREV_BRONZE  = ['歐宏麟','Jim','Mn','土豆仁','附中彭于晏','Hua','Harlem'];
 
-// AI 評論（依名字對應，賽前可先填預測風格，賽後可更新）
+// 各場系列賽領先隊（熱門隊）
+const FAVORITES = ['尼克', '塞爾提克', '灰狼'];
+
+// 自動金句產生器
+function generateComment(votes, margins) {
+  const v = votes || [];
+  const m = margins || [];
+  const hot = v.filter((t, i) => t === FAVORITES[i]).length;
+  const coldTeams = v.map((t, i) => (t && t !== FAVORITES[i]) ? t : null).filter(Boolean);
+  const tightAll = m.length > 0 && m.every(x => x === 0);
+  const bigAll   = m.length > 0 && m.every(x => x === 2);
+
+  if (hot === MATCH_NAMES.length) {
+    if (tightAll) return '三場全押領先隊差距還押小分，穩健到讓人心疼——這樣是拿不了冠軍的';
+    if (bigAll)   return '三押熱門還押大比分，不是超級自信就是——反正比別人多一種輸法';
+    return '三場全押領先隊，風險最低的一個——但最安全的預測從來拿不了冠軍';
+  }
+  if (hot === 0) {
+    return '三場全押落後隊，不是瘋子就是先知——今晚見真章';
+  }
+  if (hot === MATCH_NAMES.length - 1) {
+    const ct = coldTeams[0] || '冷門隊';
+    return `兩穩一賭，單押 ${ct} 這手最致命——若爆冷，今日 MVP 就是你`;
+  }
+  return '膽大！兩場押落後隊，今天賭桌上你才是最大的主角';
+}
+
+// 手寫金句（優先顯示，未填則自動產生）
 const AI_COMMENTS = {
   'Masky':  '東區走冷門押老鷹，西區跟大盤一致押金塊，東西各一手',
   'Louie':  '尼克＋塞爾提克＋金塊，三押熱門，穩健派代表',
@@ -742,7 +769,7 @@ function renderLB(){
           <div class="lb-sub">${sub}</div>
         </div>
         ${cells}
-        <div class="ai-comment">${AI_COMMENTS[e.name]?`💬 ${AI_COMMENTS[e.name]}`:''}</div>
+        <div class="ai-comment">${(()=>{const c=AI_COMMENTS[e.name]||generateComment(e.votes,e.margins);return c?`💬 ${c}`:''})()}</div>
         ${delBtn}
       </div>`;
   }).join('');
