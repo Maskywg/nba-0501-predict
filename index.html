@@ -680,7 +680,16 @@ function renderLB(){
     return{...e,correct,marginCorrect,marginDistance};
   }).sort((a,b)=>b.correct-a.correct||b.marginCorrect-a.marginCorrect||a.marginDistance-b.marginDistance);
 
+  let rank=0;
+  scored.forEach((e,i)=>{
+    if(i===0||e.correct!==scored[i-1].correct||e.marginCorrect!==scored[i-1].marginCorrect||e.marginDistance!==scored[i-1].marginDistance) rank=i;
+    e._rank=rank;
+  });
+
   document.getElementById('lb-body').innerHTML = scored.map((e,i)=>{
+    const r=e._rank;
+    const rankMedal=SYM[r]||(r+1);
+    const rankCls=CLS[r]||'';
     const isMe = e.name.toLowerCase()===myName.toLowerCase();
     const allDone = decided===MATCH_COUNT;
     const allCorrect = allDone && e.correct===MATCH_COUNT;
@@ -714,7 +723,7 @@ function renderLB(){
     const rowStyle=allCorrect?'style="background:rgba(255,215,0,.08);border-left:3px solid #FFD700"':'';
     return `
       <div class="lb-row ${isMe?'me':''}" ${rowStyle}>
-        <div class="lb-rank ${allCorrect?'g':CLS[i]||''}">${allCorrect?'👑':SYM[i]||(i+1)}</div>
+        <div class="lb-rank ${rankCls}">${rankMedal}</div>
         <div class="lb-name">
           <div class="crown-row">${esc(e.name)}${isMe?'<span class="me-tag">← 你</span>':''}${PREV_CHAMPS.some(n=>n.toLowerCase()===e.name.toLowerCase())?'<span class="prev-champ">👑 昨日冠軍</span>':PREV_RUNNERS.some(n=>n.toLowerCase()===e.name.toLowerCase())?'<span class="prev-runner">🥈 昨日亞軍</span>':PREV_BRONZE.some(n=>n.toLowerCase()===e.name.toLowerCase())?'<span class="prev-bronze">🥉 昨日銅牌</span>':''}${crownHtml}${scoreBadge}${mBadge}</div>
           <div class="lb-sub">${sub}</div>
